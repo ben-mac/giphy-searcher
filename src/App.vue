@@ -1,17 +1,51 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Amazing Gif Searcher</h1>
+    <input v-model="searchTerm" type="text">
+    <button @click="getGifs()" class="button">Search</button>
+    <div class="gif-container">
+      <img v-for="gif in gifs" :src="gif" :key="gif.id">
+    </div>    
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      searchTerm: "",
+      gifs: [],
+    }
+  },
+  methods: {
+    getGifs() {
+      let apiKey = "Wq1yYhB4GCKYZmFWrBhVZExtG7BrBCko";
+      let searchEndPoint = "https://api.giphy.com/v1/gifs/search?";
+      let limit = 5;
+
+      let url = `${searchEndPoint}&api_key=${apiKey}&q=${
+        this.searchTerm
+      }&limit=${limit}`;
+
+      fetch(url)
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        this.buildGifs(json);
+        console.log(json);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    },
+    buildGifs(json) {
+      this.gifs = json.data.map(gif => gif.id).map(gifId => {
+        return `https://media.giphy.com/media/${gifId}/giphy.gif`;
+      });
+
+    }
   }
 }
 </script>
@@ -24,5 +58,28 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+input {
+  padding: 5px;
+  margin-bottom: 20px;
+}
+
+.button {
+  background-color: rgb(0, 172, 0);
+  color: white;
+  padding: 5px 20px;
+  border: none;
+  display: block;
+  margin: 0 auto;
+}
+
+.button:hover {
+  background-color: rgb(0, 148, 0);
+}
+.gif-container {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
