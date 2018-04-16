@@ -22,7 +22,7 @@ export default {
     getGifs() {
       let apiKey = "dc6zaTOxFJmzC";
       let searchEndPoint = "https://api.giphy.com/v1/gifs/search?";
-      let limit = 5;
+      let limit = 10;
 
       let url = `${searchEndPoint}&api_key=${apiKey}&q=${
         this.searchTerm
