@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     getGifs() {
-      let apiKey = "Wq1yYhB4GCKYZmFWrBhVZExtG7BrBCko";
+      let apiKey = "dc6zaTOxFJmzC";
       let searchEndPoint = "https://api.giphy.com/v1/gifs/search?";
       let limit = 5;
 
